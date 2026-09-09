@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Suggested Knowledge Articles" icon-name="standard:knowledge_base">
+        <div class="slds-var-p-horizontal_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading articles" size="small"></lightning-spinner>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-text-color_error">{error}</div>
+            </template>
+
+            <template if:true={showEmptyState}>
+                <p class="slds-text-body_small slds-text-color_weak">
+                    No matching articles found for this case yet.
+                </p>
+            </template>
+
+            <template if:true={hasArticles}>
+                <ul class="slds-has-dividers_top-space">
+                    <template for:each={articles} for:item="article">
+                        <li key={article.articleId} class="slds-item slds-var-p-vertical_small">
+                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                                <div class="slds-truncate">
+                                    <a href={article.articleUrl} target="_blank" rel="noopener noreferrer">
+                                        {article.title}
+                                    </a>
+                                    <p class="slds-text-body_small slds-text-color_weak slds-truncate">
+                                        {article.summary}
+                                    </p>
+                                </div>
+                                <div class="slds-no-shrink slds-var-p-left_small">
+                                    <template if:true={article.alreadyAttached}>
+                                        <lightning-badge label="Attached"></lightning-badge>
+                                    </template>
+                                    <template if:false={article.alreadyAttached}>
+                                        <lightning-button
+                                            label="Attach"
+                                            variant="brand-outline"
+                                            data-article-id={article.knowledgeArticleId}
+                                            onclick={handleAttach}
+                                        ></lightning-button>
+                                    </template>
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>
