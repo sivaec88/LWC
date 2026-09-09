@@ -1,0 +1,4 @@
+{
+  "name": "LWC",
+  "install": "npm ci"
+}
